@@ -20,6 +20,8 @@
 #include "coap.h"
 #include "net.h"
 
+#include "coap_utils.h"
+
 static int resp_wait = 1;
 static coap_optlist_t *optlist = NULL;
 static int wait_ms;
