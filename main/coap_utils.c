@@ -15,7 +15,6 @@
 #define DNS_MAX_RETRY 3
 #define DNS_WAIT_TIME 1000
 
-
 int coap_utils_resolve_address(const char *urlStr, coap_address_t *res_add) {
   const static char *TAG = "coap_utils_resolve_address";
   if (res_add == NULL) {
@@ -68,12 +67,18 @@ int coap_utils_resolve_address(const char *urlStr, coap_address_t *res_add) {
   return 0;
 }
 
-int coap_utils_resolve_ip(const char *ipStr, coap_address_t *res_add){
-  const static char *TAG = "coap_utils_resolve_address";
+int coap_utils_resolve_ip(const char *ipStr, coap_address_t *res_add) {
+  const static char *TAG = "coap_utils_resolve_ip";
 
   if (res_add == NULL) {
     ESP_LOGE(TAG, "res_add is NULL");
     return 1;
   }
 
+  coap_address_init(res_add);
+  res_add->addr.sin.sin_family = AF_INET;
+  res_add->addr.sin.sin_port = htons(5683);
+  res_add->addr.sin.sin_addr.s_addr = inet_addr(ipStr);
+
+  return 0;
 }

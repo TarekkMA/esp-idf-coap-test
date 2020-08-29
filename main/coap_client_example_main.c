@@ -150,10 +150,11 @@ static void startClient() {
   //coap_address_t *address = resolveAddress("coap://164.90.236.67");
   char *path = "sayhello/Tarek";
   coap_address_t *dst_addr = malloc(sizeof(coap_address_t));
-  coap_address_init(dst_addr);
-  dst_addr->addr.sin.sin_family      = AF_INET;
-  dst_addr->addr.sin.sin_port        = htons(5683);
-  dst_addr->addr.sin.sin_addr.s_addr = inet_addr("164.90.236.67");
+//  coap_address_init(dst_addr);
+//  dst_addr->addr.sin.sin_family      = AF_INET;
+//  dst_addr->addr.sin.sin_port        = htons(5683);
+//  dst_addr->addr.sin.sin_addr.s_addr = inet_addr("164.90.236.67");
+  coap_utils_resolve_ip("164.90.236.67", dst_addr);
 
 
   coap_context_t *ctx = coap_new_context(NULL);
