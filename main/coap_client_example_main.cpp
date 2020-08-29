@@ -16,9 +16,7 @@
 #include "protocol_examples_common.h"
 
 #include "libcoap.h"
-#include "coap_dtls.h"
 #include "coap.h"
-#include "net.h"
 
 #include "coap_utils.h"
 
@@ -110,46 +108,10 @@ static void message_handler(coap_context_t *ctx, coap_session_t *session,
   clean_up: resp_wait = 0;
 }
 
-static coap_address_t* resolveAddress(const char *urlStr) {
-  coap_address_t *dst_addr = malloc(sizeof(coap_address_t));
-  if(dst_addr == NULL){
-    ESP_LOGE(TAG, "dst_addr malloc failed");
-  }
-  static coap_uri_t uri;
-  if(coap_split_uri((const uint8_t*) urlStr, strlen(urlStr), &uri)== -1){
-    ESP_LOGE(TAG, "CoAP server uri error");
-  }
-
-  struct hostent *hp;
-  char *hostStr;
-  hostStr = (char*) malloc(uri.host.length + 1);
-  if(hostStr == NULL){
-    ESP_LOGE(TAG, "hostStr malloc failed");
-  }
-  memcpy(hostStr, uri.host.s, uri.host.length);
-  hp = gethostbyname(hostStr);
-  free(hostStr);
-
-  if (hp == NULL) {
-    ESP_LOGE(TAG, "DNS lookup failed");
-    }
-
-  if(hp->h_addrtype != AF_INET){
-    ESP_LOGE(TAG,"DNS was not ipv4");
-  }
-
-  coap_address_init(dst_addr);
-  dst_addr->addr.sin.sin_family = AF_INET;
-  dst_addr->addr.sin.sin_port = htons(uri.port);
-  memcpy(&dst_addr->addr.sin.sin_addr, hp->h_addr, sizeof(dst_addr->addr.sin.sin_addr));
-
-  return dst_addr;
-}
-
-static void startClient() {
+static void startClient(void*params) {
   //coap_address_t *address = resolveAddress("coap://164.90.236.67");
   char *path = "sayhello/Tarek";
-  coap_address_t *dst_addr = malloc(sizeof(coap_address_t));
+  coap_address_t *dst_addr = (coap_address_t*)malloc(sizeof(coap_address_t));
 //  coap_address_init(dst_addr);
 //  dst_addr->addr.sin.sin_family      = AF_INET;
 //  dst_addr->addr.sin.sin_port        = htons(5683);
@@ -172,6 +134,10 @@ static void startClient() {
   coap_run_once(ctx, 0);
 
   vTaskDelete(NULL);
+}
+
+extern "C" {
+  void app_main(void);
 }
 
 void app_main(void) {

@@ -1,7 +1,7 @@
 # Embed CA, certificate & key directly into binary
 idf_component_register(
-SRCS 	"coap_client_example_main.c" 
-		"coap_utils.c"
+SRCS 	"coap_client_example_main.cpp" 
+		"coap_utils.cpp"
 
 INCLUDE_DIRS "."
 )

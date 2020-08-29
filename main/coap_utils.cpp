@@ -8,7 +8,6 @@
 #include <netdb.h>
 #include "esp_log.h"
 #include "libcoap.h"
-#include "coap_dtls.h"
 #include "coap.h"
 #include "net.h"
 
