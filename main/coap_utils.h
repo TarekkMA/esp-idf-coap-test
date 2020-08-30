@@ -1,5 +1,5 @@
 /*
- * coap_utils.h
+ * cosp_utils.h
  *
  *  Created on: Aug 29, 2020
  *      Author: tarekkma
