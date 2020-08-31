@@ -17,6 +17,7 @@ public:
   virtual ~CoapClient();
   void run();
   void get(const char *path);
+  void obs(const char *path);
 private:
   coap_context_t *context;
   coap_session_t *session;

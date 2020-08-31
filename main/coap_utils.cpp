@@ -11,6 +11,7 @@
 #include "coap.h"
 #include "net.h"
 
+
 #define DNS_MAX_RETRY 3
 #define DNS_WAIT_TIME 1000
 
